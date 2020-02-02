@@ -1,0 +1,35 @@
+{
+    "manifest_version": 2,
+    "name": "html5-video-shorcuts",
+    "version": "0.0.0.1",
+    "description": "add shortcuts for videos, such as pause/play/skip",
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*/*"
+            ],
+            "js": [
+                "library/keymaster.js",
+                "video_shortcut.js",
+                "main.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "background": {
+        "scripts": [
+            "library/hot-reload.js"
+        ]
+    },
+    "permissions": [
+        "*://*/*"
+    ],
+    "browser_action": {
+        "default_icon": {
+            "128": "images/icon128.png"
+        }
+    },
+    "icons": {
+        "128": "images/icon128.png"
+    }
+}
