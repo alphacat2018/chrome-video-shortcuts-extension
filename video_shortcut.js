@@ -46,12 +46,13 @@ const video_shortcut = {
 
     _bindHotKeys(element) {
         window.addEventListener(
-            "keyup",
+            "keydown",
             e => {
-                if (e.defaultPrevented) {
+                if (this._video === null) {
                     return;
                 }
-
+                
+                let shouldPreventEvent = true;
                 if (e.code === 'ArrowLeft' || e.code === 'ArrowRight') {
                     let seconds = SKIP_SECONDS;
                     if (e.altKey && !e.shiftKey) {
@@ -62,10 +63,16 @@ const video_shortcut = {
                         seconds = SHIFT_SKIP_SECONDS;
                     }
                     this._skip(seconds, e.code === 'ArrowLeft');
-                }
-                
-                if (e.code === 'Space') {
+                } else if (e.code === 'Space') {
                     this._togglePause();
+                } else {
+                    shouldPreventEvent = false;
+                }
+
+                if (shouldPreventEvent) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
                 }
             },
             true,
